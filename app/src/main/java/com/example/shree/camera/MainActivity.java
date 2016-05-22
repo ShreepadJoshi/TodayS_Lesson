@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -58,11 +62,47 @@ public class MainActivity extends ActionBarActivity {
         if (shouldAskPermission() == true){
             String[] perms = {"android.permission. WRITE_EXTERNAL_STORAGE"};
             int permsRequestCode = 200;
+            //requestPermissions(perms, permsRequestCode);
         }
-       storeCameraPhotoInSDCard(bitmap, "012345");
+
+        Bitmap taggedBitmap = writeInformationOnImage(bitmap);
+        storeCameraPhotoInSDCard(taggedBitmap, "0123456");
+        iv.setImageBitmap(taggedBitmap);
+        }
+    }
+
+    private Bitmap writeInformationOnImage(Bitmap loadedBitmap) {
+
+        Bitmap drawableBitmap = loadedBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Canvas canvas = new Canvas(drawableBitmap);
+
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        canvas.drawBitmap(drawableBitmap, 0, 0, paint);
+        paint.setColor(Color.rgb(110, 110, 110));
+        // text size in pixels
+        paint.setTextSize(8);
+        paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        paint.setAntiAlias(true);
+
+        paint.setShadowLayer(1f, 0f, 1f, Color.DKGRAY);
+        canvas.drawText("EFGH afldk aslfjsd fopa skjdfokas", 0, 10, paint);
+        canvas.save();
+
+        return drawableBitmap;
+    }
 
 
-        iv.setImageBitmap(bitmap);
+    private void storeCameraPhotoInSDCard(Bitmap bitmap, String currentDate){
+        File outputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "photo_" + currentDate + ".jpg");
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -110,17 +150,4 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    private void storeCameraPhotoInSDCard(Bitmap bitmap, String currentDate){
-        File outputFile = new File(Environment.getExternalStorageDirectory(), "photo_" + currentDate + ".jpg");
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            fileOutputStream.flush();
-            fileOutputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
