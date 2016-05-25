@@ -19,7 +19,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -27,14 +27,13 @@
         android:layout_below="@+id/textview"
         android:layout_centerHorizontal="true"
         android:textColor="#ff7aff24"
-        android:textSize="35dp" />
+        android:textSize="35dp" />-->
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/imageView"
-
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textview"
         android:layout_centerHorizontal="true" />
 
     <Button

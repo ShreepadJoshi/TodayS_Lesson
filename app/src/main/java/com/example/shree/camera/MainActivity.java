@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
 
         b1=(Button)findViewById(R.id.button);
         iv=(ImageView)findViewById(R.id.imageView);
-
+        iv.setVisibility(View.GONE);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-
+        iv.setVisibility(View.VISIBLE);
         if(data != null){
 
 
