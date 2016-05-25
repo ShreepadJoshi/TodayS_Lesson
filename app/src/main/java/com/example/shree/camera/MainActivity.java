@@ -75,6 +75,7 @@ public class MainActivity extends ActionBarActivity {
 
         Bitmap drawableBitmap = loadedBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(drawableBitmap);
+        canvas.setBitmap(drawableBitmap);
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         canvas.drawBitmap(drawableBitmap, 0, 0, paint);
@@ -84,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
         paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         paint.setAntiAlias(true);
 
-        paint.setShadowLayer(1f, 0f, 1f, Color.DKGRAY);
+        paint.setShadowLayer(1f, 0f, 1f, Color.RED);
         canvas.drawText("Ashok Patil  8-B  MATH's", 0, 10, paint);
         canvas.save();
 
