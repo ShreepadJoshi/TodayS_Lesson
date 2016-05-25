@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
 
-        if (shouldAskPermission() == true){
+        if (shouldAskPermission()){
             String[] perms = {"android.permission. WRITE_EXTERNAL_STORAGE"};
             int permsRequestCode = 200;
             //requestPermissions(perms, permsRequestCode);
@@ -85,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
         paint.setAntiAlias(true);
 
         paint.setShadowLayer(1f, 0f, 1f, Color.DKGRAY);
-        canvas.drawText("EFGH afldk aslfjsd fopa skjdfokas", 0, 10, paint);
+        canvas.drawText("Ashok Patil  8-B  MATH's", 0, 10, paint);
         canvas.save();
 
         return drawableBitmap;
