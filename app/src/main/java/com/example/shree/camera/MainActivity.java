@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -27,6 +28,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 
 public class MainActivity extends ActionBarActivity {
     Button b1,b2;
@@ -66,10 +68,24 @@ public class MainActivity extends ActionBarActivity {
         }
 
         Bitmap taggedBitmap = writeInformationOnImage(bitmap);
-        storeCameraPhotoInSDCard(taggedBitmap, "0123456");
-        iv.setImageBitmap(taggedBitmap);
+        String fileName = generateTimestampBasedFileName();
+        String pathOfNewPhoto = storePhotoInSDCard(taggedBitmap, fileName);
+        updateMediaGallery(pathOfNewPhoto);
+
+            iv.setImageBitmap(taggedBitmap);
         }
     }
+
+
+
+    private void updateMediaGallery(String pathOfNewPhoto) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(pathOfNewPhoto);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
 
     private Bitmap writeInformationOnImage(Bitmap loadedBitmap) {
 
@@ -93,18 +109,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    private void storeCameraPhotoInSDCard(Bitmap bitmap, String currentDate){
+    private String storePhotoInSDCard(Bitmap bitmap, String currentDate){
         File outputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "photo_" + currentDate + ".jpg");
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
+            return outputFile.getAbsolutePath();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "";
     }
 
     @Override
@@ -144,6 +162,13 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    private String generateTimestampBasedFileName() {
+        int time = (int) (System.currentTimeMillis());
+        Timestamp timestamp = new Timestamp(time);
+        String ts =  timestamp.toString();
+        return ts;
+    }
 
     private boolean shouldAskPermission(){
 
