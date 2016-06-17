@@ -39,9 +39,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="camera"
+        android:text="take Photo"
         android:id="@+id/button"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="86dp" />
+        android:layout_alignParentRight="@+id/textview"
+         />
 </RelativeLayout>

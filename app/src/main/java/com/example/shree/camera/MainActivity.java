@@ -83,6 +83,7 @@ public class MainActivity extends ActionBarActivity {
         File f = new File(pathOfNewPhoto);
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
+        //TODO  save matadata using ExifInterface
         this.sendBroadcast(mediaScanIntent);
     }
 
@@ -95,25 +96,32 @@ public class MainActivity extends ActionBarActivity {
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         canvas.drawBitmap(drawableBitmap, 0, 0, paint);
-        paint.setColor(Color.rgb(110, 110, 110));
+        paint.setColor(Color.rgb(255, 165, 0));
         // text size in pixels
         paint.setTextSize(8);
-        paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        //paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         paint.setAntiAlias(true);
 
-        paint.setShadowLayer(1f, 0f, 1f, Color.RED);
+        //paint.setShadowLayer(1f, 0f, 1f, Color.RED);
         canvas.drawText("Ashok Patil  8-B  MATH's", 0, 10, paint);
         canvas.save();
 
         return drawableBitmap;
     }
 
-
+    /**
+     * Saving Photo in SD card
+     *  PNG is a loss-less format, the compression factor (100) is ignored
+     *
+     * @param bitmap
+     * @param currentDate
+     * @return nothing
+     */
     private String storePhotoInSDCard(Bitmap bitmap, String currentDate){
-        File outputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "photo_" + currentDate + ".jpg");
+        File outputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "photo_" + currentDate + ".png");
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
             return outputFile.getAbsolutePath();
