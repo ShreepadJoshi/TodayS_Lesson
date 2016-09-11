@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -32,7 +31,7 @@ import java.sql.Timestamp;
 
 public class MainActivity extends ActionBarActivity {
     Button b1,b2;
-    ImageView iv;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +39,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         b1=(Button)findViewById(R.id.button);
-        iv=(ImageView)findViewById(R.id.imageView);
-        iv.setVisibility(View.GONE);
+        imageView =(ImageView)findViewById(R.id.imageView);
+        imageView.setVisibility(View.GONE);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-        iv.setVisibility(View.VISIBLE);
+        imageView.setVisibility(View.VISIBLE);
         if(data != null){
 
 
@@ -72,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
         String pathOfNewPhoto = storePhotoInSDCard(taggedBitmap, fileName);
         updateMediaGallery(pathOfNewPhoto);
 
-            iv.setImageBitmap(taggedBitmap);
+            imageView.setImageBitmap(taggedBitmap);
         }
     }
 
